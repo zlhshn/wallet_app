@@ -7,7 +7,7 @@ const harcamaAlani = document.getElementById('harcamaAlani')
 const kaydet = document.getElementById('kaydet')
 
 
-
+const tbody = document.getElementById('table1')
 
 
 
@@ -17,11 +17,7 @@ if(!(tarih.value && harcamaAlani.value &&harcamaMiktari.value )){
 }
 else {
 
-    const tbody = document.getElementById('table1')
 
-    //    const tr = document.createElement('tr')
-    //    tbody.appendChild(tr)
-    
     const tr = tbody.insertRow()
     const tarihTd = tr.insertCell(0)
     const harcamaTd = tr.insertCell(1)
@@ -34,22 +30,14 @@ else {
     miktarTd.textContent = harcamaMiktari.value;
     islemTd.innerHTML = '<i class="fa-solid fa-trash text-danger d-block text-center"></i>'
     
-    // const giderMiktarı = harcamaMiktari.value
-    // console.log(giderMiktarı);
 
- 
-// const giderTotal = document.getElementById('gider')
-
-// giderTotal.textContent = arrGider.reduce((sum,x)=>sum+Number(x),0)
-
+    budget()
     tarih.value = ''
     harcamaAlani.value = ''
     harcamaMiktari.value = ''
 }
 
-budget()
 localStorage.setItem('bütce',tbody.innerHTML)
-
 })
 
 
@@ -75,12 +63,17 @@ const gelirInput = document.getElementById('gelirInput')
 const budget = ()=>{
 
     ekle.addEventListener('click',()=>{
-
+       
         document.getElementById('gelir').textContent = gelirInput.value
         localStorage.setItem('bütce',tbody.innerHTML)
+
+        gelirInput.value = ''
+         //? kalanı bulma
+
+      const kalan = document.getElementById('kalan')
+       kalan.textContent = Number(gelirInput.value) - Number(gider.textContent )
        
     })
-    
 
     const gider = document.getElementById('gider')
     const miktar = document.querySelectorAll('#data')
@@ -92,10 +85,23 @@ const budget = ()=>{
 
     const kalan = document.getElementById('kalan')
     kalan.textContent = Number(gelirInput.value) - Number(gider.textContent )
-
     // tbody.innerHTML = localStorage.getItem('bütce')
 
 }
 
-
 budget()
+
+
+
+const reset = document.getElementById('reset')
+
+reset.addEventListener('click',()=>{
+    document.getElementById('gelir').textContent = 0
+    document.getElementById('gider').textContent = 0
+    document.getElementById('kalan').textContent = 0
+
+    tbody.textContent =''
+   
+   
+
+})
