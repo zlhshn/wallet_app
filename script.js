@@ -1,22 +1,23 @@
 const tarih = document.getElementById('tarih')
-
 const harcamaMiktari = document.getElementById('harcamaMiktari')
-
 const harcamaAlani = document.getElementById('harcamaAlani')
-
 const kaydet = document.getElementById('kaydet')
-
-
 const tbody = document.getElementById('table1')
 
 
+window.addEventListener('load', () => {
+    // Get reference to the table body
+    const tbody = document.getElementById('table1');
+    
+    // Load the table content from local storage
+    tbody.innerHTML = localStorage.getItem('bütce');
+});
 
 kaydet.addEventListener('click',() =>{
 if(!(tarih.value && harcamaAlani.value &&harcamaMiktari.value )){
     alert('eksik bilgi girdiniz')
 }
 else {
-
 
     const tr = tbody.insertRow()
     const tarihTd = tr.insertCell(0)
@@ -30,8 +31,8 @@ else {
     miktarTd.textContent = harcamaMiktari.value;
     islemTd.innerHTML = '<i class="fa-solid fa-trash text-danger d-block text-center"></i>'
     
-
     budget()
+
     tarih.value = ''
     harcamaAlani.value = ''
     harcamaMiktari.value = ''
@@ -61,19 +62,27 @@ const gelirInput = document.getElementById('gelirInput')
 
 
 const budget = ()=>{
-
+    
+    const gelirArray = []
     ekle.addEventListener('click',()=>{
+
        
-        document.getElementById('gelir').textContent = gelirInput.value
+       
+        gelirArray.push(gelirInput.value)
+        const totalArray = gelirArray.reduce((sum,num)=> sum + Number(num),0)
+        document.getElementById('gelir').textContent = totalArray
+        
         localStorage.setItem('bütce',tbody.innerHTML)
 
         gelirInput.value = ''
          //? kalanı bulma
 
       const kalan = document.getElementById('kalan')
-       kalan.textContent = Number(gelirInput.value) - Number(gider.textContent )
+       kalan.textContent =document.getElementById('gelir').textContent - Number(gider.textContent )
        
     })
+
+   
 
     const gider = document.getElementById('gider')
     const miktar = document.querySelectorAll('#data')
@@ -84,10 +93,13 @@ const budget = ()=>{
     //? kalanı bulma
 
     const kalan = document.getElementById('kalan')
-    kalan.textContent = Number(gelirInput.value) - Number(gider.textContent )
+    kalan.textContent = document.getElementById('gelir').textContent - Number(gider.textContent )
     // tbody.innerHTML = localStorage.getItem('bütce')
+    localStorage.setItem('bütce',tbody.innerHTML)
 
 }
+
+
 
 budget()
 
@@ -101,7 +113,7 @@ reset.addEventListener('click',()=>{
     document.getElementById('kalan').textContent = 0
 
     tbody.textContent =''
-   
+ 
    
 
 })
