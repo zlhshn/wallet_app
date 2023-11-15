@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
 });
 
 kaydet.addEventListener('click',() =>{
-if(!(tarih.value && harcamaAlani.value &&harcamaMiktari.value )){
+if(!(tarih.value && harcamaAlani.value && harcamaMiktari.value )){
     alert('eksik bilgi girdiniz')
 }
 else {
@@ -61,17 +61,14 @@ const gelirInput = document.getElementById('gelirInput')
 
 
 
+
 const budget = ()=>{
     
-    const gelirArray = []
     ekle.addEventListener('click',()=>{
 
-       
-       
-        gelirArray.push(gelirInput.value)
-        const totalArray = gelirArray.reduce((sum,num)=> sum + Number(num),0)
-        document.getElementById('gelir').textContent = totalArray
-        
+       const gelir = document.getElementById('gelir')
+        gelir.textContent  = Number(gelirInput.value)
+    
         localStorage.setItem('bütce',tbody.innerHTML)
 
         gelirInput.value = ''
